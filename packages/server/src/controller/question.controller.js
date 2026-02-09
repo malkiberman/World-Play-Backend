@@ -1,4 +1,5 @@
 import questionService from '../services/question.service.js';
+import { syncUserBalances } from '../utils/syncUserBalances.js';
 
 const questionController = {
   // POST /api/questions
@@ -56,6 +57,7 @@ const questionController = {
     try {
       const { id } = req.params;
       const { optionId } = req.body;
+      const userId = req.user.id;
 
       if (!optionId) {
         return res.status(400).json({ error: 'חובה לשלוח optionId' });
@@ -63,6 +65,7 @@ const questionController = {
 
       const updatedQuestion = await questionService.resolveQuestion(
         id,
+        userId,
         optionId
       );
 

@@ -286,6 +286,7 @@ enum TransactionType {
   SPEND
   TRANSFER
   GIFT
+  DIRECT_WIN
   REFUND
 }
 
