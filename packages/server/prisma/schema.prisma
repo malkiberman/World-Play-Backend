@@ -288,6 +288,7 @@ enum TransactionType {
   GIFT
   DIRECT_WIN
   REFUND
+  WINNER_PAYOUT
 }
 
 enum TransactionStatus {

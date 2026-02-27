@@ -14,11 +14,15 @@ import chatRoutes from './routes/chat.router.js';
 import notificationRoutes from './routes/notification.routes.js';
 import configRoutes from './routes/config.routes.js';
 import statusRoutes from './routes/status.routes.js';
-import giftsRoutes from './routes/gifts.routes.js';
+
+import giftsRoutes from './routes/gifts.routes.js'
+import userAnswerRoutes from './routes/userAnswer.routes.js';
+
 // import corsOptions from './config/corsOptions.js';
 import { initializeSocketIO } from './services/socket.service.js';
 
 import paymentRoutes from './routes/payment.routes.js';
+import economyRoutes from './routes/economy.routes.js';
 import { handleWebhook } from './payments/payments.webhook.js';
 
 dotenv.config();
@@ -26,7 +30,6 @@ const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 8080;
 
-// חשוב: הנתיב של ה-Webhook חייב לבוא לפני express.json()
 app.post(
   '/api/payments/webhook',
   express.raw({ type: 'application/json' }),
@@ -46,6 +49,7 @@ app.use(
 app.use('/', statusRoutes); // דף הבית של ה-API
 app.use('/api/config', configRoutes); // קונפיגורציית המדיה
 app.use('/api/users', userRoutes);
+app.use('/api/user-answers', userAnswerRoutes);
 app.use('/api/finance', financeRoutes);
 app.use('/api/streams', streamRoutes);
 app.use('/api/games', gameRoutes);
@@ -56,6 +60,7 @@ app.use('/api/chat', chatRoutes);
 app.use('/api/gifts', giftsRoutes);
 
 app.use('/api/payments', paymentRoutes);
+app.use('/api/economy', economyRoutes);
 
 // --- Functions ---
 async function checkMediaServer() {
@@ -82,7 +87,7 @@ async function checkMediaServer() {
 const io = initializeSocketIO(server);
 app.set('io', io);
 
-server.listen(PORT, async () => {
+server.listen(PORT, '0.0.0.0', async () => {
   console.log(`✅ Main Server running on port ${PORT}`);
   await checkMediaServer();
 });

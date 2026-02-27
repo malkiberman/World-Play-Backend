@@ -58,7 +58,6 @@ const questionController = {
       const { id } = req.params;
       const { optionId } = req.body;
       const userId = req.user.id;
-
       if (!optionId) {
         return res.status(400).json({ error: 'חובה לשלוח optionId' });
       }
@@ -66,6 +65,8 @@ const questionController = {
       const updatedQuestion = await questionService.resolveQuestion(
         id,
         userId,
+
+        userId, // <--- תוסיפי את ה-userId כאן
         optionId
       );
 
